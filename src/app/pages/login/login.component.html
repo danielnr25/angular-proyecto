@@ -7,14 +7,14 @@
                 <span class="text-muted-color text-lg font-medium dark:text-blue-500">Inicia sesion</span>
             </div>
 
-            <div>
-                <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Usuario</label>
-                <input pInputText id="email1" type="text" placeholder="Ingrese usuario" class="w-full md:w-[30rem] mb-8" [(ngModel)]="email" />
+            <form [formGroup]="formularioLogin" (ngSubmit)="iniciarSession()">
+                <label for="usuario" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Usuario</label>
+                <input pInputText formControlName="usuario" type="text" placeholder="Ingrese usuario" class="w-full md:w-[30rem] mb-8" />
 
-                <label for="password1" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Contraseña</label>
-                <p-password id="password1" [(ngModel)]="password" placeholder="Ingrese contraseña" [toggleMask]="true" styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
-                <p-button label="Iniciar" styleClass="w-full" routerLink="/"></p-button>
-            </div>
+                <label for="clave" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Contraseña</label>
+                <p-password formControlName="clave" placeholder="Ingrese contraseña" [toggleMask]="true" styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
+                <p-button type="submit" [disabled]="formularioLogin.invalid" label="Iniciar" styleClass="w-full"></p-button>
+            </form>
         </div>
     </div>
 </div>

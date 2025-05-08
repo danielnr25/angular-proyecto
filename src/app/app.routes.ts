@@ -9,7 +9,7 @@ export const routes: Routes = [
   },
   {
     path:'login', // está es la ruta principal
-    component:PrivateComponent
+    component:LoginComponent
   },
   {
     path:"**", // cualquier ruta no definida

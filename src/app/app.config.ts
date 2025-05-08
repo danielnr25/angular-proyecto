@@ -5,7 +5,7 @@ import Aura from '@primeng/themes/aura';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-
+import { MessageService } from 'primeng/api';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -17,6 +17,7 @@ export const appConfig: ApplicationConfig = {
           preset: Aura
         },
         ripple: true
-    })
+    }),
+    MessageService
   ]
 };

@@ -8,7 +8,9 @@ import { RippleModule } from 'primeng/ripple';
 import { LoginService } from '@services/login.service';
 import { Login } from '@interfaces/Login';
 import { CommonModule } from '@angular/common';
-const PRIMENG_MODULES = [CheckboxModule,FormsModule,ButtonModule,InputTextModule,PasswordModule,RippleModule];
+import { ToastService } from '@services/toast.service';
+import { ToastModule } from 'primeng/toast';
+const PRIMENG_MODULES = [CheckboxModule,FormsModule,ButtonModule,InputTextModule,PasswordModule,RippleModule,ToastModule];
 @Component({
   selector: 'app-login',
   imports: [PRIMENG_MODULES,ReactiveFormsModule,CommonModule],
@@ -23,7 +25,7 @@ export class LoginComponent {
   formularioLogin: FormGroup;
   mostrarLoading: boolean = false;
 
-  constructor(private fb:FormBuilder){
+  constructor(private fb:FormBuilder,private _toastService:ToastService){
     this.formularioLogin = this.fb.group({
       usuario:['',Validators.required],
       clave:['',Validators.required]
@@ -42,11 +44,25 @@ export class LoginComponent {
     this._serviceLogin.autenticar(request).subscribe({
       next: (data:any)=>{
         console.log('session correcta',data)
+        const message = data['message'];
+        const response = data['data'];
+        const token = data['token'];
+        const permisos = data['permisos'];
+        //console.log(message);
+        console.log(response);
+        //console.log(token);
+        //console.log(permisos);
+        localStorage.setItem("token",token);
+        localStorage.setItem("idperfil",response.idperfil);
+        localStorage.setItem("nombre",response.nombre);
+        localStorage.setItem("permisos",JSON.stringify(permisos));
       },
       error:(data) =>{
         this.mostrarLoading=false;
         const mensaje = data.error['message'];
-        alert(mensaje);
+        //alert(mensaje);
+        //this._toastService.showErrorViaToast(mensaje);
+        this._toastService.showToast("error",'Error',mensaje)
         console.log('error:',mensaje);
       },
       complete: () =>{

@@ -10,6 +10,7 @@ import { Login } from '@interfaces/Login';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '@services/toast.service';
 import { ToastModule } from 'primeng/toast';
+import { Router } from '@angular/router';
 const PRIMENG_MODULES = [CheckboxModule,FormsModule,ButtonModule,InputTextModule,PasswordModule,RippleModule,ToastModule];
 @Component({
   selector: 'app-login',
@@ -33,7 +34,7 @@ export class LoginComponent {
   }
 
   private _serviceLogin = inject(LoginService);
-
+  private _router = inject(Router);
   iniciarSession(){
     this.mostrarLoading = true;
     const request:Login = {
@@ -43,19 +44,19 @@ export class LoginComponent {
 
     this._serviceLogin.autenticar(request).subscribe({
       next: (data:any)=>{
-        console.log('session correcta',data)
         const message = data['message'];
         const response = data['data'];
         const token = data['token'];
         const permisos = data['permisos'];
         //console.log(message);
-        console.log(response);
+        //console.log(response);
         //console.log(token);
         //console.log(permisos);
         localStorage.setItem("token",token);
         localStorage.setItem("idperfil",response.idperfil);
         localStorage.setItem("nombre",response.nombre);
         localStorage.setItem("permisos",JSON.stringify(permisos));
+        this._router.navigate(['/admin']);
       },
       error:(data) =>{
         this.mostrarLoading=false;

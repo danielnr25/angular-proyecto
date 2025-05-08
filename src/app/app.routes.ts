@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from '@pages/login/login.component';
-import { PrivateComponent } from '@pages/private/private.component';
 export const routes: Routes = [
   {
     path:'',
@@ -12,8 +11,13 @@ export const routes: Routes = [
     component:LoginComponent
   },
   {
+    path:'admin',
+    //component:PrivateComponent,
+   loadChildren: () => import('./pages/private/private.routes').then(a=>a.privateRoute)
+  },
+  {
     path:"**", // cualquier ruta no definida
     redirectTo:'/login'
-  }
+  },
 
 ];

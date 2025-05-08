@@ -10,7 +10,7 @@ export const routes: Routes = [
     canActivate:[authGuard],
     children:[
       {
-        path: "tipos-de-proyecto",
+        path: "tipo_proyecto",
         component:TipoProyectoComponent
       }
     ]

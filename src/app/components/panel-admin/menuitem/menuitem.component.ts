@@ -12,7 +12,6 @@ import { LayoutService } from '@services/layout.service';
   standalone:true,
   imports: [CommonModule, RouterModule, RippleModule],
   templateUrl: './menuitem.component.html',
-  styleUrl: './menuitem.component.css',
   providers:[LayoutService],
     animations: [
         trigger('children', [

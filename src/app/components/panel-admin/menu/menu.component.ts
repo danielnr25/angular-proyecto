@@ -8,7 +8,6 @@ import { MenuitemComponent } from '../menuitem/menuitem.component';
   standalone:true,
   imports: [RouterModule,MenuitemComponent,CommonModule],
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css'
 })
 export class MenuComponent {
   model: MenuItem[] = [];
@@ -17,13 +16,13 @@ export class MenuComponent {
       this.model = [
           {
               label: 'Home',
-              items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+              items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard'] }]
           },
           {
-              label: 'UI Components',
+              label: 'Proyectos',
               items: [
-                  { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
-                  { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] }
+                  { label: 'Tipos de Proyecto', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/tipo_proyecto'] },
+                  { label: 'Proyecto', icon: 'pi pi-fw pi-circle', routerLink: ['/admin/proyecto'] }
               ]
           },
       ];

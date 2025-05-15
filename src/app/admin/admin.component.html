@@ -1,1 +1,11 @@
-<p>admin works!</p>
+<div class="layout-wrapper" [ngClass]="containerClass">
+   <app-toolbar></app-toolbar>
+   <app-sidebar></app-sidebar>
+   <div class="layout-main-container">
+       <div class="layout-main">
+           <router-outlet></router-outlet>
+       </div>
+       <app-footer></app-footer>
+   </div>
+   <div class="layout-mask animate-fadein"></div>
+</div> 

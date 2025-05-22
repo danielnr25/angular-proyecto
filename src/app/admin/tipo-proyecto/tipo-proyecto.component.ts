@@ -43,7 +43,7 @@ export class TipoProyectoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void { // se ejecuta ni bien inicializa el componente
-    this._svTipoProyecto.getTipoProyectos().subscribe({
+  /* this._svTipoProyecto.getTipoProyectos().subscribe({
       next:(data)=>{
         this.tipoProyectos = data;
         this.loadingTipoProyectos = false;
@@ -57,7 +57,9 @@ export class TipoProyectoComponent implements OnInit {
         //console.log("Se termino la ejecucion");
         this.loadingTipoProyectos = false;
       }
-    });
+    }); */
+
+    this.cargarLista();
 
   }
 
@@ -133,5 +135,24 @@ export class TipoProyectoComponent implements OnInit {
   }
 
 
+  cargarLista(): void{
+    this.loadingTipoProyectos = true;
+     this._svTipoProyecto.getTipoProyectos().subscribe({
+      next:(data)=>{
+        this.tipoProyectos = data;
+        //this.loadingTipoProyectos = false;
+      },
+      error:(data)=>{
+        console.error("Error data",data);
+      },
+      complete:()=>{
+        this.loadingTipoProyectos = false;
+      }
+    });
+  }
+
+  onSaveSuccess(): void{
+    this.cargarLista();
+  }
 
 }

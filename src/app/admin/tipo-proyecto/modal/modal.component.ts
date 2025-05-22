@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, output, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -22,7 +22,9 @@ export class ModalComponent {
   @Input() display: boolean = false;
   @Input() mode: 'create' |'edit' = 'create';
   @Input() tipoProyecto: TipoProyecto | null = null;
-
+   // eventos
+  @Output() closeModal = new EventEmitter<void>(); // evento closeModal
+  @Output() saveSuccess = new EventEmitter<void>();  // evento para registro o actualizacion
   // inyeccion del servicio tipoproyecto
   private _svTipoProyecto = inject(TipoProyectoService);
 
@@ -52,8 +54,6 @@ export class ModalComponent {
   }
 
 
-  // eventos
-  @Output() closeModal = new EventEmitter<void>(); // evento closeModal
 
   close(){
     this.closeModal.emit();
@@ -78,6 +78,8 @@ export class ModalComponent {
             detail:response,
             life:3000
           })
+          this.saveSuccess.emit();
+          this.close();
         },
         error: (err) =>{
           console.log(err)
@@ -89,7 +91,6 @@ export class ModalComponent {
           })
         }
       })
-      this.close();
     }else{
      this._svTipoProyecto.actualizarTipoProyecto(this.editableTipoProyecto).subscribe({
         next:(response) =>{
@@ -99,6 +100,8 @@ export class ModalComponent {
             detail:response,
             life:3000
           })
+          this.saveSuccess.emit();
+          this.close();
         },
         error: (err) =>{
           console.log(err)
@@ -110,7 +113,6 @@ export class ModalComponent {
           })
         }
       })
-      this.close();
     }
   }
 

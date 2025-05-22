@@ -47,15 +47,14 @@ export class TipoProyectoComponent implements OnInit {
       next:(data)=>{
         this.tipoProyectos = data;
         this.loadingTipoProyectos = false;
-        console.log(this.tipoProyectos)
-        console.log("Listado de tipos de proyectos: ",data);
-
+        //console.log(this.tipoProyectos)
+        //console.log("Listado de tipos de proyectos: ",data);
       },
       error:(data)=>{
         console.error("Error data",data);
       },
       complete:()=>{
-        console.log("Se termino la ejecucion");
+        //console.log("Se termino la ejecucion");
         this.loadingTipoProyectos = false;
       }
     });

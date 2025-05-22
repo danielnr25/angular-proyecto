@@ -17,12 +17,16 @@ export class TipoProyectoService {
   );
  }
 
- agregarTipoProyecto(){
-
+ agregarTipoProyecto(dato:TipoProyecto){
+  return this.http.post<{message:string;data:TipoProyecto[]}>(`${this.urlApi}/tipo_proyectos`,dato).pipe(
+    map(response =>response.message)
+  );
  }
 
- actualizarTipoProyecto(){
-
+ actualizarTipoProyecto(dato:TipoProyecto){
+  return this.http.put<{message:string;data:TipoProyecto[]}>(`${this.urlApi}/tipo_proyectos/${dato.idtipo_proyecto}`,dato).pipe(
+    map(response =>response.message)
+  );
  }
 
  eliminarTipoProyecto(id:number):Observable<{message:string}>{

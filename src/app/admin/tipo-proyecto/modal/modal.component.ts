@@ -28,7 +28,7 @@ export class ModalComponent {
     estado: 'ACTIVO',
   }
   constructor(private cd: ChangeDetectorRef) {}
-  // cada vez que cambieel input tipoProyecto (es decir cuando abramos el modal con datos)
+  // cada vez que cambie el input tipoProyecto (es decir cuando abramos el modal con datos)
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['tipoProyecto'] && this.tipoProyecto) {
       this.editableTipoProyecto = { ...this.tipoProyecto };

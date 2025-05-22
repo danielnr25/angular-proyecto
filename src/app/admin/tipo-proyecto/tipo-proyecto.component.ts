@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -16,12 +16,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TipoProyectoService } from '@services/tipo-proyecto.service';
 import { TipoProyecto } from '@interfaces/tipo-proyecto';
-
+import { ModalComponent } from './modal/modal.component';
 const PRIMENG_MODULES = [TableModule,InputIconModule,IconFieldModule,MultiSelectModule,InputTextModule,SelectModule,SliderModule,ProgressBarModule,TagModule,ButtonModule,ConfirmDialogModule,ToastModule];
 @Component({
   selector: 'app-tipo-proyecto',
   standalone: true,
-  imports: [PRIMENG_MODULES,CommonModule,FormsModule],
+  imports: [PRIMENG_MODULES,CommonModule,FormsModule,ModalComponent],
   templateUrl: './tipo-proyecto.component.html',
   styleUrl: './tipo-proyecto.component.css',
   providers: [MessageService, ConfirmationService]
@@ -33,6 +33,10 @@ export class TipoProyectoComponent implements OnInit {
   // Servicios del tipo_proyecto
   private _svTipoProyecto = inject(TipoProyectoService);
 
+  // VARIABLES PARA EL USO DEL MODAL
+  showModal = false; // booleano para poder iniciarlo el valor del modal
+  editMode: 'create' | 'edit' = 'create'; // propiedad para saber desde que boton estoy clic
+  selectedTipoProyecto!: TipoProyecto | null;
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService
@@ -78,8 +82,21 @@ export class TipoProyectoComponent implements OnInit {
     }
   }
 
-  editarTipoProyecto(tipoProyecto:TipoProyecto):void{
-    console.log("Editando tipo de proyecto", tipoProyecto);
+  openModalCreate(){
+    this.editMode = 'create';
+    this.showModal = true;
+    this.selectedTipoProyecto = {
+      idtipo_proyecto: 0,
+      nombre: '',
+      comentario: '',
+      estado: 'ACTIVO'
+    };
+  }
+
+  openModalEdit(tipoProyecto:TipoProyecto):void{
+    this.editMode = 'edit';
+    this.showModal = true;
+    this.selectedTipoProyecto = {...tipoProyecto}; // clonar el objeto con la finaliadad de evitar mutación directa
   }
 
   eliminarTipoProyecto(id:number):void{
@@ -116,8 +133,6 @@ export class TipoProyectoComponent implements OnInit {
     });
   }
 
-  registrarTipoProyecto(){
-    console.log("Registrando tipo de proyecto");
-  }
+
 
 }

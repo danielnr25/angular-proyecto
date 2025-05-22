@@ -20,4 +20,5 @@ export class ToolbarComponent {
       this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
    }
 
+
 }

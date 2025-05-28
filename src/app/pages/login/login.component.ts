@@ -11,10 +11,11 @@ import { CommonModule } from '@angular/common';
 import { ToastService } from '@services/toast.service';
 import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
+import { AppFloatingConfigurator } from '@components/layout/app.floatingconfigurator';
 const PRIMENG_MODULES = [CheckboxModule,FormsModule,ButtonModule,InputTextModule,PasswordModule,RippleModule,ToastModule];
 @Component({
   selector: 'app-login',
-  imports: [PRIMENG_MODULES,ReactiveFormsModule,CommonModule],
+  imports: [PRIMENG_MODULES,ReactiveFormsModule,CommonModule,AppFloatingConfigurator],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

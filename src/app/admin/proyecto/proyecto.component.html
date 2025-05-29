@@ -15,7 +15,7 @@
    [rowHover]="true"
    [showGridlines]="true"
    [paginator]="true"
-   [globalFilterFields]="['nombre','comentario']"
+   [globalFilterFields]="['nombre','detalle','fecha_inicio','fecha_fin']"
    responsiveLayout="scroll"
  >
    <ng-template #caption>
@@ -77,7 +77,7 @@
    <ng-template pTemplate="body" let-proyecto>
       <tr>
         <td>
-          {{ proyecto.idtipo_proyecto }}
+          {{ proyecto.idproyecto }}
         </td>
         <td>
           <div class="flex items-center gap-2">

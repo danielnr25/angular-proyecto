@@ -34,7 +34,9 @@ export class TareaService {
           Authorization: `Bearer ${token}`,
       }
     }
-    return this.http.post<{message:string;data:Tarea[]}>(`${this.urlApi}/tareas`,dato,options);
+    return this.http.post<{message:string;data:Tarea[]}>(`${this.urlApi}/tareas`,dato,options).pipe(
+      map(response => response.message)
+    );
   }
 
   actualizarTarea(dato:Tarea){
@@ -45,7 +47,9 @@ export class TareaService {
           Authorization: `Bearer ${token}`,
       }
     }
-    return this.http.put<{message:string;data:Tarea[]}>(`${this.urlApi}/tareas/${dato.idtarea}`,dato,options);
+    return this.http.put<{message:string;data:Tarea[]}>(`${this.urlApi}/tareas/${dato.idtarea}`,dato,options).pipe(
+      map(response => response.message)
+    );
   }
 
   eliminarTarea(dato:Tarea){
@@ -56,7 +60,9 @@ export class TareaService {
           Authorization: `Bearer ${token}`,
       }
     }
-    return this.http.delete<{message:string;data:Tarea[]}>(`${this.urlApi}/tareas/${dato.idtarea}`,options);
+    return this.http.delete<{message:string;data:Tarea[]}>(`${this.urlApi}/tareas/${dato.idtarea}`,options).pipe(
+      map(response => response.message)
+    );
   }
 
   actualizarTareaEstado(dato:Tarea){
@@ -67,7 +73,9 @@ export class TareaService {
           Authorization: `Bearer ${token}`,
       }
     }
-    return this.http.put<{message:string;data:Tarea[]}>(`${this.urlApi}/tareas/estado/${dato.idtarea}`,dato,options);
+    return this.http.put<{message:string;data:Tarea[]}>(`${this.urlApi}/tareas/estado/${dato.idtarea}`,dato,options).pipe(
+      map(response => response.message)
+    );
   }
 
 

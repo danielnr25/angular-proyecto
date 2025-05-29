@@ -35,7 +35,9 @@ export class EtapaService {
           Authorization: `Bearer ${token}`,
       }
     }
-    return this.http.post<{message:string;data:Etapa[]}>(`${this.urlApi}/etapas`,dato,options);
+    return this.http.post<{message:string;data:Etapa[]}>(`${this.urlApi}/etapas`,dato,options).pipe(
+      map(response => response.message)
+    );
   }
 
   actualizarEtapa(dato:Etapa){
@@ -47,7 +49,9 @@ export class EtapaService {
       }
     }
 
-    return this.http.put<{message:string;data:Etapa[]}>(`${this.urlApi}/etapas/${dato.idetapa}`,dato,options);
+    return this.http.put<{message:string;data:Etapa[]}>(`${this.urlApi}/etapas/${dato.idetapa}`,dato,options).pipe(
+      map(response => response.message)
+    );
 
   }
 
@@ -60,7 +64,9 @@ export class EtapaService {
       }
     }
 
-    return this.http.delete<{message:string;data:Etapa[]}>(`${this.urlApi}/etapas/${dato.idetapa}`,options);
+    return this.http.delete<{message:string;data:Etapa[]}>(`${this.urlApi}/etapas/${dato.idetapa}`,options).pipe(
+      map(response => response.message)
+    );
   }
 
 

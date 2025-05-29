@@ -70,7 +70,7 @@ export class ModalComponent {
   }
 
   guardar(){
-    if(!this.editableProyecto.nombre || !this.editableProyecto.estado){
+    if(!this.editableProyecto.nombre || !this.editableProyecto.detalle){
       this.messageService.add({
         severity: 'warn',
         summary: 'Campos requeridos',

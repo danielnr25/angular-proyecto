@@ -62,7 +62,9 @@ import { HttpClient } from '@angular/common/http';
            Authorization: `Bearer ${token}`,
        }
      }
-     return this.http.delete<{message:string;data:Proyecto[]}>(`${this.urlApi}/proyectos/${id}`,options);
+     return this.http.delete<{message:string;data:Proyecto[]}>(`${this.urlApi}/proyectos/${id}`,options).pipe(
+       map(response => response)
+      );
    }
 
    obtenerCombosProyecto(idproyecto:number){

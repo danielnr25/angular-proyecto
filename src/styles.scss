@@ -1,4 +1,6 @@
 @use './front/layout.scss';
 @use 'primeicons/primeicons.css';
-@use 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @use './front/demo/demo.scss';

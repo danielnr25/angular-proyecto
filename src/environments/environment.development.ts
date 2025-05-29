@@ -1,3 +1,3 @@
 export const environment = {
-  api:"http://127.0.0.1:8000/api"
+  api:"https://projectapp-production-9c16.up.railway.app/api"
 }

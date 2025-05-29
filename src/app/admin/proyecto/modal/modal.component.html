@@ -1,0 +1,26 @@
+<p-dialog
+  [(visible)]="display"
+  [style]="{ width: '650px' }"
+  [modal]="true"
+  [closable]="false"
+  [header]="mode==='edit' ? 'Editar Proyecto' : 'Registrar Proyecto'"
+>
+  <ng-template #content>
+    <div class="flex flex-col gap-6">
+        <input type="text" hidden id="idtipo_proyecto" [(ngModel)] ="editableProyecto.idtipo_proyecto" />
+     <div>
+          <label for="nombre" class="block font-bold mb-3">Nombre</label>
+          <input type="text" pInputText id="nombre" [(ngModel)] ="editableProyecto.nombre"  required autofocus fluid />
+      </div>
+      <div>
+          <label for="detalle" class="block font-bold mb-3">Detalle</label>
+          <textarea id="detalle" pTextarea [(ngModel)] ="editableProyecto.detalle"  required rows="3" cols="20" fluid></textarea>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancelar" icon="pi pi-times" text (click)="close()"  />
+    <p-button label="Guardar" icon="pi pi-check" (click)="guardar()" />
+  </ng-template>
+</p-dialog>

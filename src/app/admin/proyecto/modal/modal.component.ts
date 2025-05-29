@@ -7,69 +7,80 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
-import { TipoProyecto } from '@interfaces/tipo-proyecto';
 import { MessageService } from 'primeng/api';
-import { TipoProyectoService } from '@services/tipo-proyecto.service';
-const PRIMENG_MODULES = [ButtonModule,DialogModule,RadioButtonModule,InputNumberModule,TextareaModule,InputTextModule];
+import { ProyectoService } from '@services/proyecto.service';
+import { Proyecto } from '@interfaces/proyecto';
+const PRIMENG_MODULES = [
+  ButtonModule,
+  DialogModule,
+  RadioButtonModule,
+  InputNumberModule,
+  TextareaModule,
+  InputTextModule,
+];
 @Component({
   selector: 'app-modal',
-  imports: [PRIMENG_MODULES,FormsModule,CommonModule],
+  imports: [PRIMENG_MODULES, FormsModule, CommonModule],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
   @Input() display: boolean = false;
   @Input() mode: 'create' |'edit' = 'create';
-  @Input() tipoProyecto: TipoProyecto | null = null;
-   // eventos
-  @Output() closeModal = new EventEmitter<void>(); // evento closeModal
-  @Output() saveSuccess = new EventEmitter<void>();  // evento para registro o actualizacion
-  // inyeccion del servicio tipoproyecto
-  private _svTipoProyecto = inject(TipoProyectoService);
+  @Input() proyecto: Proyecto | null = null;
 
-  // cuando le doy clic desde el boton nuevo
-  editableTipoProyecto: TipoProyecto = {
-    idtipo_proyecto: 0,
+  @Output() closeModal = new EventEmitter<void>(); // evento closeModal
+  @Output() saveSuccess = new EventEmitter<void>();
+
+  private _svProyecto = inject(ProyectoService);
+  editableProyecto: Proyecto = {
+    idproyecto: 0,
     nombre: '',
-    comentario: '',
+    idtipo_proyecto: 0,
+    fecha_inicio: new Date(),
+    fecha_fin: new Date(),
     estado: 'ACTIVO',
+    detalle: '',
+    idusuario: 0,
   }
 
   constructor(private cd: ChangeDetectorRef, private messageService: MessageService) {}
-  // cada vez que cambie el input tipoProyecto (es decir cuando abramos el modal con datos)
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['tipoProyecto'] && this.tipoProyecto) {
-      this.editableTipoProyecto = { ...this.tipoProyecto };
+    if (changes['proyecto'] && this.proyecto) {
+      this.editableProyecto = { ...this.proyecto };
     } else if (this.mode === 'create') {
       // si es modo crear, resetea el objeto
-      this.editableTipoProyecto = {
-        idtipo_proyecto: 0,
+      this.editableProyecto = {
+        idproyecto: 0,
         nombre: '',
-        comentario: '',
+        idtipo_proyecto: 0,
+        fecha_inicio: new Date(),
+        fecha_fin: new Date(),
         estado: 'ACTIVO',
+        detalle: '',
+        idusuario: 0,
       };
       this.cd.detectChanges();
     }
   }
-
-
 
   close(){
     this.closeModal.emit();
   }
 
   guardar(){
-    if(!this.editableTipoProyecto.nombre || !this.editableTipoProyecto.comentario){
+    if(!this.editableProyecto.nombre || !this.editableProyecto.estado){
       this.messageService.add({
         severity: 'warn',
         summary: 'Campos requeridos',
-        detail: 'Debe ingresar nombre y comentario',
+        detail: 'Debe ingresar nombre y detalle del proyecto',
         life:3000
       })
       return
     }
     if(this.mode==='create'){
-      this._svTipoProyecto.agregarTipoProyecto(this.editableTipoProyecto).subscribe({
+      this._svProyecto.agregarProyecto(this.editableProyecto).subscribe({
         next:(response) =>{
           this.messageService.add({
             severity:'success',
@@ -91,7 +102,7 @@ export class ModalComponent {
         }
       })
     }else{
-     this._svTipoProyecto.actualizarTipoProyecto(this.editableTipoProyecto).subscribe({
+     this._svProyecto.actualizarProyecto(this.editableProyecto).subscribe({
         next:(response) =>{
           this.messageService.add({
             severity:'success',
@@ -114,5 +125,7 @@ export class ModalComponent {
       })
     }
   }
+
+
 
 }

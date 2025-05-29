@@ -1,7 +1,9 @@
 <div class="card">
    <h2 class="font-semibold text-xl mb-4">Proyectos</h2>
  </div>
- 
+
+<p-confirmdialog [style]="{ width: '500px' }" />
+<p-toast></p-toast>
 
  <div class="card">
    <p-table
@@ -23,6 +25,7 @@
          label="Agregar"
          class="p-button-md mb-2 p-button-help"
          icon="pi pi-plus"
+        (click)="openModalCreate()"
        ></button>
        <p-iconfield iconPosition="left" class="ml-auto">
          <p-inputicon>
@@ -111,3 +114,12 @@
  </p-table>
 
  </div>
+
+<app-modal
+  [display]="showModal"
+  [proyecto]="selectedProyecto"
+  [mode]="editMode"
+  (closeModal)="showModal = false"
+  (save)="onSaveSuccess()"
+>
+</app-modal>

@@ -1,5 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators,ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -12,14 +18,27 @@ import { ToastService } from '@services/toast.service';
 import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
 import { AppFloatingConfigurator } from '@components/layout/app.floatingconfigurator';
-const PRIMENG_MODULES = [CheckboxModule,FormsModule,ButtonModule,InputTextModule,PasswordModule,RippleModule,ToastModule];
+const PRIMENG_MODULES = [
+  CheckboxModule,
+  FormsModule,
+  ButtonModule,
+  InputTextModule,
+  PasswordModule,
+  RippleModule,
+  ToastModule,
+];
 @Component({
   selector: 'app-login',
-  imports: [PRIMENG_MODULES,ReactiveFormsModule,CommonModule,AppFloatingConfigurator],
+  standalone: true,
+  imports: [
+    PRIMENG_MODULES,
+    ReactiveFormsModule,
+    CommonModule,
+    AppFloatingConfigurator,
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
-
 export class LoginComponent {
   email: string = '';
   password: string = '';
@@ -27,24 +46,24 @@ export class LoginComponent {
   formularioLogin: FormGroup;
   mostrarLoading: boolean = false;
 
-  constructor(private fb:FormBuilder,private _toastService:ToastService){
+  constructor(private fb: FormBuilder, private _toastService: ToastService) {
     this.formularioLogin = this.fb.group({
-      usuario:['',Validators.required],
-      clave:['',Validators.required]
+      usuario: ['', Validators.required],
+      clave: ['', Validators.required],
     });
   }
 
   private _serviceLogin = inject(LoginService);
   private _router = inject(Router);
-  iniciarSession(){
+  iniciarSession() {
     this.mostrarLoading = true;
-    const request:Login = {
-      Usuario:this.formularioLogin.value.usuario,
-      Clave:this.formularioLogin.value.clave
-    }
+    const request: Login = {
+      Usuario: this.formularioLogin.value.usuario,
+      Clave: this.formularioLogin.value.clave,
+    };
 
     this._serviceLogin.autenticar(request).subscribe({
-      next: (data:any)=>{
+      next: (data: any) => {
         const message = data['message'];
         const response = data['data'];
         const token = data['token'];
@@ -53,26 +72,24 @@ export class LoginComponent {
         //console.log(response);
         //console.log(token);
         //console.log(permisos);
-        localStorage.setItem("token",token);
-        localStorage.setItem("idperfil",response.idperfil);
-        localStorage.setItem("nombre",response.nombre);
-        localStorage.setItem("permisos",JSON.stringify(permisos));
+        localStorage.setItem('token', token);
+        localStorage.setItem('idperfil', response.idperfil);
+        localStorage.setItem('nombre', response.nombre);
+        localStorage.setItem('permisos', JSON.stringify(permisos));
         this._router.navigate(['/admin']);
       },
-      error:(data) =>{
-        this.mostrarLoading=false;
+      error: (data) => {
+        this.mostrarLoading = false;
         const mensaje = data.error['message'];
         //alert(mensaje);
         //this._toastService.showErrorViaToast(mensaje);
-        this._toastService.showToast("error",'Error',mensaje)
-        console.log('error:',mensaje);
+        this._toastService.showToast('error', 'Error', mensaje);
+        console.log('error:', mensaje);
       },
-      complete: () =>{
-        this.mostrarLoading=false;
-        console.log('Acción completada')
-      }
+      complete: () => {
+        this.mostrarLoading = false;
+        console.log('Acción completada');
+      },
     });
-
-
   }
 }

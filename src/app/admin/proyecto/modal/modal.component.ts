@@ -1,4 +1,13 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Input, output, Output, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  output,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -20,13 +29,14 @@ const PRIMENG_MODULES = [
 ];
 @Component({
   selector: 'app-modal',
+  standalone: true,
   imports: [PRIMENG_MODULES, FormsModule, CommonModule],
   templateUrl: './modal.component.html',
-  styleUrl: './modal.component.scss'
+  styleUrl: './modal.component.scss',
 })
 export class ModalComponent {
   @Input() display: boolean = false;
-  @Input() mode: 'create' |'edit' = 'create';
+  @Input() mode: 'create' | 'edit' = 'create';
   @Input() proyecto: Proyecto | null = null;
 
   @Output() closeModal = new EventEmitter<void>(); // evento closeModal
@@ -42,9 +52,12 @@ export class ModalComponent {
     estado: 'ACTIVO',
     detalle: '',
     idusuario: 0,
-  }
+  };
 
-  constructor(private cd: ChangeDetectorRef, private messageService: MessageService) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private messageService: MessageService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['proyecto'] && this.proyecto) {
@@ -65,67 +78,64 @@ export class ModalComponent {
     }
   }
 
-  close(){
+  close() {
     this.closeModal.emit();
   }
 
-  guardar(){
-    if(!this.editableProyecto.nombre || !this.editableProyecto.detalle){
+  guardar() {
+    if (!this.editableProyecto.nombre || !this.editableProyecto.detalle) {
       this.messageService.add({
         severity: 'warn',
         summary: 'Campos requeridos',
         detail: 'Debe ingresar nombre y detalle del proyecto',
-        life:3000
-      })
-      return
+        life: 3000,
+      });
+      return;
     }
-    if(this.mode==='create'){
+    if (this.mode === 'create') {
       this._svProyecto.agregarProyecto(this.editableProyecto).subscribe({
-        next:(response) =>{
+        next: (response) => {
           this.messageService.add({
-            severity:'success',
-            summary:'Registrando',
-            detail:response,
-            life:3000
-          })
+            severity: 'success',
+            summary: 'Registrando',
+            detail: response,
+            life: 3000,
+          });
           this.saveSuccess.emit();
           this.close();
         },
-        error: (err) =>{
-          console.log(err)
+        error: (err) => {
+          console.log(err);
           this.messageService.add({
-            severity:'error',
-            summary:'Error',
-            detail:err.message,
-            life:3000
-          })
-        }
-      })
-    }else{
-     this._svProyecto.actualizarProyecto(this.editableProyecto).subscribe({
-        next:(response) =>{
+            severity: 'error',
+            summary: 'Error',
+            detail: err.message,
+            life: 3000,
+          });
+        },
+      });
+    } else {
+      this._svProyecto.actualizarProyecto(this.editableProyecto).subscribe({
+        next: (response) => {
           this.messageService.add({
-            severity:'success',
-            summary:'Actualizando',
-            detail:response,
-            life:3000
-          })
+            severity: 'success',
+            summary: 'Actualizando',
+            detail: response,
+            life: 3000,
+          });
           this.saveSuccess.emit();
           this.close();
         },
-        error: (err) =>{
-          console.log(err)
+        error: (err) => {
+          console.log(err);
           this.messageService.add({
-            severity:'error',
-            summary:'Error',
-            detail:err.message,
-            life:3000
-          })
-        }
-      })
+            severity: 'error',
+            summary: 'Error',
+            detail: err.message,
+            life: 3000,
+          });
+        },
+      });
     }
   }
-
-
-
 }

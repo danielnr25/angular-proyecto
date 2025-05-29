@@ -15,6 +15,7 @@ const PRIMENG_MODULES = [ButtonModule,DialogModule,RadioButtonModule,InputNumber
   selector: 'app-modal',
   imports: [PRIMENG_MODULES,FormsModule,CommonModule],
   templateUrl: './modal.component.html',
+  standalone: true,
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {

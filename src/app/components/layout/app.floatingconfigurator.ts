@@ -6,6 +6,7 @@ import { LayoutService } from '@services/layout.service';
 
 @Component({
     selector: 'app-floating-configurator',
+    standalone: true,
     imports: [ButtonModule, StyleClassModule, AppConfigurator],
     template: `
         <div class="fixed flex gap-4 top-8 right-8">
@@ -23,7 +24,7 @@ export class AppFloatingConfigurator {
    isDarkTheme = computed(() => this.LayoutService.layoutConfig().darkTheme);
 
    toggleDarkMode() {
-   console.log('toggleDarkMode');   
+   console.log('toggleDarkMode');
 
    this.LayoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
    }
